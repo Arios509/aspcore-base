@@ -1,0 +1,15 @@
+C:\Users\arios\source\repos\aspcore-api\Domain\bin\Debug\net6.0\Domain.deps.json
+C:\Users\arios\source\repos\aspcore-api\Domain\bin\Debug\net6.0\Domain.dll
+C:\Users\arios\source\repos\aspcore-api\Domain\bin\Debug\net6.0\ref\Domain.dll
+C:\Users\arios\source\repos\aspcore-api\Domain\bin\Debug\net6.0\Domain.pdb
+C:\Users\arios\source\repos\aspcore-api\Domain\obj\Debug\net6.0\Domain.csproj.AssemblyReference.cache
+C:\Users\arios\source\repos\aspcore-api\Domain\obj\Debug\net6.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\arios\source\repos\aspcore-api\Domain\obj\Debug\net6.0\Domain.AssemblyInfoInputs.cache
+C:\Users\arios\source\repos\aspcore-api\Domain\obj\Debug\net6.0\Domain.AssemblyInfo.cs
+C:\Users\arios\source\repos\aspcore-api\Domain\obj\Debug\net6.0\Domain.csproj.CoreCompileInputs.cache
+C:\Users\arios\source\repos\aspcore-api\Domain\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\arios\source\repos\aspcore-api\Domain\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\arios\source\repos\aspcore-api\Domain\obj\Debug\net6.0\scopedcss\bundle\Domain.styles.css
+C:\Users\arios\source\repos\aspcore-api\Domain\obj\Debug\net6.0\Domain.dll
+C:\Users\arios\source\repos\aspcore-api\Domain\obj\Debug\net6.0\ref\Domain.dll
+C:\Users\arios\source\repos\aspcore-api\Domain\obj\Debug\net6.0\Domain.pdb
