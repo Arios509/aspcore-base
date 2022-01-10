@@ -3,7 +3,7 @@ using Domain;
 using Newtonsoft.Json.Linq;
 using System.Net;
 
-namespace SeedWork
+namespace Seedwork
 {
     public class CommandErrorResponse
     {

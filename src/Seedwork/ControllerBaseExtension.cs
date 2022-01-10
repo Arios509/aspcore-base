@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Mvc;
 
-namespace SeedWork
+namespace Seedwork
 {
     public static class ControllerBaseExtension
     {
