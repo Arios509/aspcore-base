@@ -1,0 +1,7 @@
+# 
+GET http://localhost:5253/api/message/new?sender=%2b60167366214&receiver=0146567552&originalMessage=+OTP%3d173778+REF.oPDI+for+fund+transfer+to+account+xxx-x-x7777-x+CHALERMPON+YO+amount+1000.00&recvtime=1%2f11%2f2022+3%3a31%3a16+PM&smsMessageId=ea19a365-9d68-4722-b9f4-a65ee81f7528&receivedDateTime=1%2f11%2f2022+3%3a31%3a16+PM
+Content-Type: application/json
+
+{
+  
+}

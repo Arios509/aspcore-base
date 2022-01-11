@@ -16,11 +16,14 @@ namespace Api.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Title = table.Column<string>(type: "text", nullable: false),
-                    CreatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Otp = table.Column<string>(type: "text", nullable: false),
+                    OriginalMessage = table.Column<string>(type: "text", nullable: false),
                     BankType = table.Column<string>(type: "text", nullable: false),
-                    Amount = table.Column<int>(type: "integer", nullable: false)
+                    CreatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    OtpNumber = table.Column<string>(type: "text", nullable: false),
+                    Sender = table.Column<string>(type: "text", nullable: false),
+                    Receiver = table.Column<string>(type: "text", nullable: false),
+                    SmsMessageId = table.Column<string>(type: "text", nullable: false),
+                    ReceivedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {

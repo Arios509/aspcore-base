@@ -18,16 +18,17 @@ namespace Api.Controllers
         }
 
         [HttpGet]
+        [Route("detail")]
         public async Task<IActionResult> GetSmsMessage([FromQuery] GetSmsMessageQuery command) =>
             this.OkOrError(await _mediator.Send(command));
 
         [HttpGet]
-        [Route("detail")]
         public async Task<IActionResult> GetSmsMessages([FromQuery] GetSmsMessagesQuery command) =>
             this.OkOrError(await _mediator.Send(command));
 
-        [HttpPost]
-        public async Task<IActionResult> AddSmsMessage([FromBody] AddSmsMessageCommand command) =>
+        [HttpGet]
+        [Route("new")]
+        public async Task<IActionResult> AddSmsMessage([FromHybrid] AddSmsMessageCommand command) =>
             this.OkOrError(await _mediator.Send(command));
     }
 }

@@ -1,4 +1,3 @@
-using Api.Infrastructure.Repositories;
 using CSharpFunctionalExtensions;
 using Domain.Aggregate.SmsMessage;
 using MediatR;
@@ -9,19 +8,18 @@ namespace Api.Controllers
     public class GetSmsMessageQuery : IRequest<Result<SmsMessage, CommandErrorResponse>>
     {
         public string BankType { get; set; }
-        public int Amount { get; set; }
     }
     public class GetSmsMessageQueryHandler : IRequestHandler<GetSmsMessageQuery, Result<SmsMessage, CommandErrorResponse>>
     {
         private readonly ILogger<GetSmsMessageQuery> _logger;
-        private readonly DataContext _context;
+        private readonly ISmsMessageRepository _smsMessageRepository;
 
         public GetSmsMessageQueryHandler(
-            ILogger<GetSmsMessageQuery> logger, 
-            DataContext context)
+            ILogger<GetSmsMessageQuery> logger,
+            ISmsMessageRepository smsMessageRepository)
         {
             _logger = logger;
-            _context = context;
+            _smsMessageRepository = smsMessageRepository;
         }
 
         public async Task<Result<SmsMessage,CommandErrorResponse>> 
@@ -29,7 +27,7 @@ namespace Api.Controllers
         {
             try
             {
-                var smsMessage = _context.SmsMessage.Where(d => d.BankType == query.BankType && d.Amount == query.Amount).Single();
+                var smsMessage = await _smsMessageRepository.Get(bankType: query.BankType);
 
                 if (smsMessage == null)
                     return ResultCustom.NotFound<SmsMessage>("Sms message not found");

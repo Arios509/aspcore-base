@@ -6,21 +6,52 @@ namespace Domain.Aggregate.SmsMessage
     {
         [Key]
         public int Id { get; set; }
-        public string Title { get; set; }
-        public DateTime CreatedDateTime { get; set; }
-        public string Otp { get; set; }
+        public string OriginalMessage { get; set; }
         public string BankType { get; set; }
-        public int Amount { get; set; }
+        public DateTime CreatedDateTime { get; set; }
+        public string OtpNumber { get; set; }
+        public string Sender { get; set; }
+        public string Receiver { get; set; }
+        public string SmsMessageId { get; set; }
+        public DateTime ReceivedDateTime { get; set; }
 
-        public SmsMessage(string title = "", string otp = "", string bankType = "", int amount = 0)
+        public SmsMessage(string sender, string receiver,
+            string smsMessageId, string originalMessage, DateTime receivedDateTime,
+            string otpNumber = "", string bankType = "")
         {
-            Title = title;
-            Otp = otp;
+            Sender = sender;
+            Receiver = receiver;
+            SmsMessageId = smsMessageId;
+            OriginalMessage = originalMessage;
+            ReceivedDateTime = receivedDateTime;
+            OtpNumber = otpNumber;
             BankType = bankType;
             CreatedDateTime = DateTime.UtcNow;
-            Amount = amount;
         }
-        public static SmsMessage CreateNew(string title, string otp, string bankType, int amount) =>
-            new(title, otp, bankType, amount);
+
+        public static SmsMessage CreateNew(string sender, string receiver,
+            string smsMessageId, string originalMessage,
+            DateTime receivedDateTime)
+        {
+            var splitedOriginalMessage = originalMessage.Split(" ");
+
+            var otpNumber = GetOtpNumber(splitedOriginalMessage: splitedOriginalMessage);
+            var bankType = GetBankType(splitedOriginalMessage: splitedOriginalMessage);
+
+            return new(sender, receiver, smsMessageId, originalMessage,
+                                receivedDateTime, otpNumber, bankType);
+        }
+
+        public static string GetOtpNumber(string[] splitedOriginalMessage, string bank = "") =>
+            bank switch
+            {
+                _ => splitedOriginalMessage[0].Split("OTP=")[1],
+            };
+
+        public static string GetBankType(string[] splitedOriginalMessage, string bank = "") =>
+           bank switch
+           {
+               _ => splitedOriginalMessage[1].Split("REF.")[1]
+           };
     }
 }
