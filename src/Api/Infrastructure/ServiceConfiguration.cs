@@ -6,6 +6,6 @@
 
     public class ConnectionStringOptions
     {
-        public string DatabaseUrl { get;set; }
+        public string DefaultConnection { get;set; }
     }
 }

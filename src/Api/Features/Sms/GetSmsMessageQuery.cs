@@ -28,7 +28,7 @@ namespace Api.Controllers
             try
             {
                 var smsMessage = await _smsMessageRepository.Get(bankType: query.BankType);
-
+                var existedSmsMessage = await _smsMessageRepository.Get();
                 if (smsMessage == null)
                     return ResultCustom.NotFound<SmsMessage>("Sms message not found");
                 

@@ -5,6 +5,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Domain.Aggregate.SmsMessage;
 using Microsoft.EntityFrameworkCore;
+using Seedwork;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var configuration = builder.Configuration;
-builder.Services.AddOptions().Configure<ConnectionStringOptions>(configuration.GetSection("ConnectionString"));
+builder.Services.AddOptions()
+    .Configure<ConnectionStringOptions>(configuration.GetSection("ConnectionString"));
 
 // postgres connection
 builder.Services.AddDbContext<DataContext>(options =>
@@ -25,7 +27,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 
 builder.Services.AddScoped<ISmsMessageRepository, SmsMessageRepository>();
-
+builder.Services.AddScoped<IDapper, DapperUtils>();
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 {

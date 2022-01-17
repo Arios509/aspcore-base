@@ -1,13 +1,17 @@
 ﻿using Domain.Aggregate.SmsMessage;
 using Microsoft.EntityFrameworkCore;
+using Seedwork;
+
 namespace Api.Infrastructure.Repositories
 {
     public class SmsMessageRepository : ISmsMessageRepository
     {
         private readonly DataContext _dataContext;
-        public SmsMessageRepository(DataContext dataContext)
+        private readonly IDapper _dapper;
+        public SmsMessageRepository(DataContext dataContext, IDapper dapper)
         {
             _dataContext = dataContext; 
+            _dapper = dapper;
         }
         public void Add(SmsMessage smsMessage)
         {
@@ -31,6 +35,12 @@ namespace Api.Infrastructure.Repositories
             return query.FirstOrDefault();
 
             //await _dataContext.SmsMessage.FirstOrDefaultAsync(d => d.SmsMessageId == smsMessageId);
+        }
+
+        public async Task<SmsMessage> Get()
+        {
+            var result = await Task.FromResult(_dapper.Get<SmsMessage>($"SELECT * FROM public.'SmsMessage'", null, commandType: System.Data.CommandType.Text));
+            return result;
         }
     }
 }
