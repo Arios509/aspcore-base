@@ -19,27 +19,29 @@ namespace Api.Infrastructure.Repositories
             _dataContext.SaveChanges();
         }
 
-        public async Task<SmsMessage> Get(string? smsMessageId = null, string? bankType = null)
-        {
-            List<SmsMessage> results = await _dataContext.SmsMessage.ToListAsync();
-            IEnumerable<SmsMessage> query = results;
+        //public async Task<SmsMessage> Get(string? smsMessageId = null, string? bankType = null)
+        //{
+        //    List<SmsMessage> results = await _dataContext.SmsMessage.ToListAsync();
+        //    IEnumerable<SmsMessage> query = results;
 
-            if (!string.IsNullOrEmpty(smsMessageId))
-                query = query.Where(d => d.SmsMessageId == smsMessageId);
+        //    if (!string.IsNullOrEmpty(smsMessageId))
+        //        query = query.Where(d => d.SmsMessageId == smsMessageId);
 
-            if (!string.IsNullOrEmpty(bankType))
-                query = query.Where(d => d.BankType == bankType);
+        //    if (!string.IsNullOrEmpty(bankType))
+        //        query = query.Where(d => d.BankType == bankType);
 
-            query = query.Where(d => d.ReceivedDateTime >= DateTime.Now.Date && d.ReceivedDateTime < DateTime.Now);
+        //    query = query.Where(d => d.ReceivedDateTime >= DateTime.Now.Date && d.ReceivedDateTime < DateTime.Now);
 
-            return query.FirstOrDefault();
+        //    return query.FirstOrDefault();
 
-            //await _dataContext.SmsMessage.FirstOrDefaultAsync(d => d.SmsMessageId == smsMessageId);
-        }
+        //    //await _dataContext.SmsMessage.FirstOrDefaultAsync(d => d.SmsMessageId == smsMessageId);
+        //}
 
         public async Task<SmsMessage> Get()
         {
-            var result = await Task.FromResult(_dapper.Get<SmsMessage>($"SELECT * FROM public.'SmsMessage'", null, commandType: System.Data.CommandType.Text));
+            var query = new StringBuilder();
+            query.append("SELECT * FROM \"SmsMessage\"");
+            var result = await _dapper.Get<SmsMessage>($"SELECT * FROM \"SmsMessage\"", null, commandType: System.Data.CommandType.Text);
             return result;
         }
     }

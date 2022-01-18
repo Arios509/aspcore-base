@@ -15,6 +15,7 @@ namespace Domain.Aggregate.SmsMessage
         public string SmsMessageId { get; set; }
         public DateTime ReceivedDateTime { get; set; }
 
+        private SmsMessage() { }
         public SmsMessage(string sender, string receiver,
             string smsMessageId, string originalMessage, DateTime receivedDateTime,
             string otpNumber = "", string bankType = "")

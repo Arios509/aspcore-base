@@ -22,19 +22,20 @@ namespace Api.Controllers
             _smsMessageRepository = smsMessageRepository;
         }
 
-        public async Task<Result<SmsMessage,CommandErrorResponse>> 
+        public async Task<Result<SmsMessage, CommandErrorResponse>>
             Handle(GetSmsMessageQuery query, CancellationToken cancellationToken)
         {
             try
             {
-                var smsMessage = await _smsMessageRepository.Get(bankType: query.BankType);
+                //var smsMessage = await _smsMessageRepository.Get(bankType: query.BankType);
                 var existedSmsMessage = await _smsMessageRepository.Get();
-                if (smsMessage == null)
-                    return ResultCustom.NotFound<SmsMessage>("Sms message not found");
-                
-                return ResultCustom.Success(smsMessage);
+                //if (smsMessage == null)
+                //    return ResultCustom.NotFound<SmsMessage>("Sms message not found");
 
-            }catch (Exception ex)
+                return ResultCustom.Success(existedSmsMessage);
+
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return ResultCustom.Error<SmsMessage>(ex.Message);

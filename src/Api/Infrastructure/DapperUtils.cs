@@ -27,10 +27,11 @@ namespace Api.Infrastructure
             throw new NotImplementedException();
         }
 
-        public T Get<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.Text)
+        public async Task<T> Get<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.Text)
         {
             using IDbConnection db = new NpgsqlConnection(_connectionString);
-            return db.Query<T>(sp, parms, commandType: commandType).FirstOrDefault();
+            var result = await db.QueryAsync<T>(sp, parms, commandType: commandType);
+            return result.FirstOrDefault();
         }
 
         public List<T> GetAll<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
