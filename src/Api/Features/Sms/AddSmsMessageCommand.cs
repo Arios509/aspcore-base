@@ -31,9 +31,9 @@ namespace Api.Controllers
         {
             try
             {
-                //var existedSmsMessage = await _smsMessageRepository.Get(command.SmsMessageId);
-                //if (existedSmsMessage != null)
-                //    return ResultCustom.Error<bool>("Duplicated sms");
+                var existedSmsMessage = await _smsMessageRepository.Get(command.SmsMessageId);
+                if (existedSmsMessage != null)
+                    return ResultCustom.Error<bool>("Duplicated sms");
 
                 var smsMessage = SmsMessage.CreateNew(
                     sender: command.Sender,

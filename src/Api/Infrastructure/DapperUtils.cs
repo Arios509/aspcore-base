@@ -17,6 +17,12 @@ namespace Api.Infrastructure
             _config = config;
             _connectionString = opt.Value.DefaultConnection;
         }
+
+        public DbConnection GetDbconnection()
+        {
+            return new NpgsqlConnection(_connectionString);
+        }
+
         public void Dispose()
         {
 
@@ -29,26 +35,22 @@ namespace Api.Infrastructure
 
         public async Task<T> Get<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.Text)
         {
-            using IDbConnection db = new NpgsqlConnection(_connectionString);
+            using IDbConnection db = GetDbconnection();
             var result = await db.QueryAsync<T>(sp, parms, commandType: commandType);
             return result.FirstOrDefault();
         }
 
         public List<T> GetAll<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
-            using IDbConnection db = new NpgsqlConnection(_connectionString);
+            using IDbConnection db = GetDbconnection();
             return db.Query<T>(sp, parms, commandType: commandType).ToList();
-        }
-
-        public DbConnection GetDbconnection()
-        {
-            return new SqlConnection(_connectionString);
         }
 
         public T Insert<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             T result;
-            using IDbConnection db = new NpgsqlConnection(_connectionString);
+            using IDbConnection db = GetDbconnection();
+
             try
             {
                 if (db.State == ConnectionState.Closed)
@@ -82,7 +84,7 @@ namespace Api.Infrastructure
         public T Update<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             T result;
-            using IDbConnection db = new NpgsqlConnection(_connectionString);
+            using IDbConnection db = GetDbconnection();
             try
             {
                 if (db.State == ConnectionState.Closed)

@@ -1,6 +1,7 @@
 ﻿using Domain.Aggregate.SmsMessage;
 using Microsoft.EntityFrameworkCore;
 using Seedwork;
+using System.Text;
 
 namespace Api.Infrastructure.Repositories
 {
@@ -10,7 +11,7 @@ namespace Api.Infrastructure.Repositories
         private readonly IDapper _dapper;
         public SmsMessageRepository(DataContext dataContext, IDapper dapper)
         {
-            _dataContext = dataContext; 
+            _dataContext = dataContext;
             _dapper = dapper;
         }
         public void Add(SmsMessage smsMessage)
@@ -19,29 +20,20 @@ namespace Api.Infrastructure.Repositories
             _dataContext.SaveChanges();
         }
 
-        //public async Task<SmsMessage> Get(string? smsMessageId = null, string? bankType = null)
-        //{
-        //    List<SmsMessage> results = await _dataContext.SmsMessage.ToListAsync();
-        //    IEnumerable<SmsMessage> query = results;
-
-        //    if (!string.IsNullOrEmpty(smsMessageId))
-        //        query = query.Where(d => d.SmsMessageId == smsMessageId);
-
-        //    if (!string.IsNullOrEmpty(bankType))
-        //        query = query.Where(d => d.BankType == bankType);
-
-        //    query = query.Where(d => d.ReceivedDateTime >= DateTime.Now.Date && d.ReceivedDateTime < DateTime.Now);
-
-        //    return query.FirstOrDefault();
-
-        //    //await _dataContext.SmsMessage.FirstOrDefaultAsync(d => d.SmsMessageId == smsMessageId);
-        //}
-
-        public async Task<SmsMessage> Get()
+        public async Task<SmsMessage> Get(string? smsMessageId = null, string? bankType = null)
         {
             var query = new StringBuilder();
-            query.append("SELECT * FROM \"SmsMessage\"");
-            var result = await _dapper.Get<SmsMessage>($"SELECT * FROM \"SmsMessage\"", null, commandType: System.Data.CommandType.Text);
+
+            query.Append("SELECT * FROM \"SmsMessage\"");
+            query.Append("WHERE");
+
+            if (!string.IsNullOrEmpty(smsMessageId))
+                query = query.Append($"\"SmsMessageId\" = '{smsMessageId}'");
+
+            if (!string.IsNullOrEmpty(bankType))
+                query = query.Append($"\"BankType\" = '{bankType}'");
+
+            var result = await _dapper.Get<SmsMessage>(query.ToString(), null, commandType: System.Data.CommandType.Text);
             return result;
         }
     }
